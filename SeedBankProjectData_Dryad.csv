@@ -1,0 +1,250 @@
+BurnUnit,Plot,Treatment,Code,Species,Family,GrowthHabit,FunctionalGroup,Unique,Individuals,Notes
+Sunset,54,fuel control,ACAGRA,Acalypha gracilens,Euphorbiaceae,Annual,Forb,1,2,NULL
+Sunset,70,fuel addition,ACAGRA,Acalypha gracilens,Euphorbiaceae,Annual,Forb,1,1,NULL
+Sunset,72,fuel control,ACAGRA,Acalypha gracilens,Euphorbiaceae,Annual,Forb,1,3,NULL
+TallWinds,23,fuel control,ACAGRA,Acalypha gracilens,Euphorbiaceae,Annual,Forb,1,1,NULL
+TallWinds,38,fuel addition,ACAGRA,Acalypha gracilens,Euphorbiaceae,Annual,Forb,1,1,NULL
+Sunset,53,fuel addition,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,54,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,3,NULL
+Sunset,61,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,70,fuel addition,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,74,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,80,fuel addition,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,82,fuel addition,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,83,fuel addition,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,27,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,4,NULL
+TallWinds,33,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,35,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,39,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,43,fuel addition,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,44,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,4,NULL
+TallWinds,49,fuel control,DICOVA,Dichanthelium ovale,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,54,fuel control,DICSPH,Dichanthelium sphaerocarpon,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,54,fuel control,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,71,fuel addition,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,79,fuel control,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,4,NULL
+Sunset,80,fuel addition,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,3,NULL
+Sunset,82,fuel addition,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,2,NULL
+TallWinds,23,fuel control,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,7,NULL
+TallWinds,24,fuel addition,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,32,fuel addition,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,88,fuel addition,DICSTR,Dichanthelium strigosum,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,52,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,53,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,54,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,56,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,72,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,4,NULL
+Sunset,74,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,75,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,4,NULL
+Sunset,77,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,2,NULL
+Sunset,78,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,79,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,6,NULL
+Sunset,81,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,4,NULL
+Sunset,82,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,84,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,11,NULL
+Sunset,85,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,21,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,23,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,5,NULL
+TallWinds,24,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,25,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,6,NULL
+TallWinds,27,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,13,NULL
+TallWinds,29,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,4,NULL
+TallWinds,30,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,2,NULL
+TallWinds,33,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,34,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+TallWinds,35,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,11,NULL
+TallWinds,41,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,45,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,11,NULL
+TallWinds,46,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,2,NULL
+TallWinds,47,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,9,NULL
+TallWinds,48,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,2,NULL
+TallWinds,87,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,13,NULL
+TallWinds,88,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,2,NULL
+TallWinds,89,fuel addition,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,3,NULL
+TallWinds,90,fuel control,DICTEN,Dichanthelium dichotomum var. tenue,Poaceae,Perennial,C3 Grass,1,1,NULL
+Sunset,52,fuel addition,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,1,NULL
+Sunset,79,fuel control,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,8,NULL
+Sunset,81,fuel control,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,2,NULL
+Sunset,84,fuel control,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,154,NULL
+Sunset,85,fuel control,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,2,NULL
+TallWinds,23,fuel control,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,8,NULL
+TallWinds,43,fuel addition,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,1,NULL
+TallWinds,90,fuel control,DROBRE,Drosera brevifolia,Droseraceae,Perennial,Forb,1,1,NULL
+Sunset,83,fuel addition,EUPCAP,Eupatorium capillifolium,Asteraceae,Perennial,Forb,1,1,NULL
+Sunset,54,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,2,NULL
+Sunset,62,fuel addition,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,1,NULL
+Sunset,71,fuel addition,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,2,NULL
+Sunset,76,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,3,NULL
+Sunset,79,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,20,NULL
+Sunset,81,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,4,NULL
+Sunset,82,fuel addition,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,1,NULL
+Sunset,85,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,6,NULL
+TallWinds,23,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,4,NULL
+TallWinds,24,fuel addition,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,3,NULL
+TallWinds,25,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,3,NULL
+TallWinds,49,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,5,NULL
+TallWinds,90,fuel control,EUPROT,Eupatorium rotundifolium,Asteraceae,Perennial,Forb,1,2,NULL
+TallWinds,87,fuel control,EUPSEM,Eupatorium semiserratum,Asteraceae,Perennial,Forb,1,1,NULL
+Sunset,51,fuel addition,forb,NULL,NULL,NULL,Forb,0,3,NULL
+Sunset,52,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+Sunset,53,fuel addition,forb,NULL,NULL,NULL,Forb,1,1,NULL
+Sunset,54,fuel control,forb,NULL,NULL,NULL,Forb,0,9,NULL
+Sunset,56,fuel addition,forb,NULL,NULL,NULL,Forb,1,2,NULL
+Sunset,57,fuel addition,forb,NULL,NULL,NULL,Forb,0,3,NULL
+Sunset,60,fuel addition,forb,NULL,NULL,NULL,Forb,0,3,NULL
+Sunset,61,fuel control,forb,NULL,NULL,NULL,Forb,1,89,NULL
+Sunset,62,fuel addition,forb,NULL,NULL,NULL,Forb,0,6,NULL
+Sunset,64,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+Sunset,65,fuel control,forb,NULL,NULL,NULL,Forb,1,3,NULL
+Sunset,66,fuel control,forb,NULL,NULL,NULL,Forb,0,2,NULL
+Sunset,67,fuel control,forb,NULL,NULL,NULL,Forb,0,5,NULL
+Sunset,68,fuel control,forb,NULL,NULL,NULL,Forb,0,11,NULL
+Sunset,70,fuel addition,forb,NULL,NULL,NULL,Forb,0,2,NULL
+Sunset,71,fuel addition,forb,NULL,NULL,NULL,Forb,0,7,NULL
+Sunset,72,fuel control,forb,NULL,NULL,NULL,Forb,0,2,NULL
+Sunset,73,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+Sunset,74,fuel control,forb,NULL,NULL,NULL,Forb,0,5,NULL
+Sunset,75,fuel control,forb,NULL,NULL,NULL,Forb,0,8,NULL
+Sunset,76,fuel control,forb,NULL,NULL,NULL,Forb,0,14,NULL
+Sunset,77,fuel control,forb,NULL,NULL,NULL,Forb,0,8,NULL
+Sunset,78,fuel addition,forb,NULL,NULL,NULL,Forb,1,4,NULL
+Sunset,79,fuel control,forb,NULL,NULL,NULL,Forb,0,13,NULL
+Sunset,80,fuel addition,forb,NULL,NULL,NULL,Forb,1,1,NULL
+Sunset,81,fuel control,forb,NULL,NULL,NULL,Forb,0,4,NULL
+Sunset,82,fuel addition,forb,NULL,NULL,NULL,Forb,0,24,NULL
+Sunset,83,fuel addition,forb,NULL,NULL,NULL,Forb,0,12,NULL
+Sunset,84,fuel control,forb,NULL,NULL,NULL,Forb,0,20,NULL
+Sunset,85,fuel control,forb,NULL,NULL,NULL,Forb,0,5,NULL
+TallWinds,21,fuel addition,forb,NULL,NULL,NULL,Forb,0,1,NULL
+TallWinds,22,fuel addition,forb,NULL,NULL,NULL,Forb,1,2,NULL
+TallWinds,23,fuel control,forb,NULL,NULL,NULL,Forb,0,123,NULL
+TallWinds,24,fuel addition,forb,NULL,NULL,NULL,Forb,0,16,NULL
+TallWinds,25,fuel control,forb,NULL,NULL,NULL,Forb,0,22,NULL
+TallWinds,27,fuel control,forb,NULL,NULL,NULL,Forb,0,21,NULL
+TallWinds,29,fuel control,forb,NULL,NULL,NULL,Forb,0,1,NULL
+TallWinds,30,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+TallWinds,31,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+TallWinds,32,fuel addition,forb,NULL,NULL,NULL,Forb,0,1,NULL
+TallWinds,33,fuel control,forb,NULL,NULL,NULL,Forb,0,1,NULL
+TallWinds,34,fuel control,forb,NULL,NULL,NULL,Forb,0,1,NULL
+TallWinds,35,fuel control,forb,NULL,NULL,NULL,Forb,1,38,NULL
+TallWinds,38,fuel addition,forb,NULL,NULL,NULL,Forb,0,11,NULL
+TallWinds,39,fuel control,forb,NULL,NULL,NULL,Forb,1,2,NULL
+TallWinds,40,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+TallWinds,41,fuel addition,forb,NULL,NULL,NULL,Forb,1,30,NULL
+TallWinds,42,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+TallWinds,43,fuel addition,forb,NULL,NULL,NULL,Forb,1,3,not Drosera brevifolia
+TallWinds,44,fuel control,forb,NULL,NULL,NULL,Forb,1,12,NULL
+TallWinds,45,fuel control,forb,NULL,NULL,NULL,Forb,1,10,NULL
+TallWinds,46,fuel addition,forb,NULL,NULL,NULL,Forb,1,2,NULL
+TallWinds,47,fuel control,forb,NULL,NULL,NULL,Forb,1,3,NULL
+TallWinds,48,fuel addition,forb,NULL,NULL,NULL,Forb,1,0,NULL
+TallWinds,49,fuel control,forb,NULL,NULL,NULL,Forb,1,15,NULL
+TallWinds,86,fuel control,forb,NULL,NULL,NULL,Forb,0,2,NULL
+TallWinds,87,fuel control,forb,NULL,NULL,NULL,Forb,0,0,NULL
+TallWinds,88,fuel addition,forb,NULL,NULL,NULL,Forb,1,2,NULL
+TallWinds,89,fuel addition,forb,NULL,NULL,NULL,Forb,0,0,NULL
+TallWinds,90,fuel control,forb,NULL,NULL,NULL,Forb,0,28,NULL
+Sunset,79,fuel control,forb.102,NULL,NULL,NULL,Forb,1,3,NULL
+Sunset,81,fuel control,forb.103,NULL,NULL,NULL,Forb,1,3,NULL
+Sunset,70,fuel addition,forb.104,NULL,NULL,NULL,Forb,1,1,basal rosette
+Sunset,51,fuel addition,forb.111,NULL,Asteraceae,NULL,Forb,1,1,NULL
+TallWinds,21,fuel addition,forb.113,NULL,NULL,NULL,Forb,1,1,NULL
+Sunset,83,fuel addition,forb.114,NULL,NULL,NULL,Forb,1,1,basal rosette
+Sunset,85,fuel control,forb.115,NULL,NULL,NULL,Forb,1,1,NULL
+Sunset,61,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,7,not Dichanthelium
+Sunset,66,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,1,NULL
+Sunset,70,fuel addition,graminoid,NULL,NULL,NULL,Graminoid,1,8,not Dichanthelium ovale
+Sunset,81,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,2,NULL
+Sunset,82,fuel addition,graminoid,NULL,NULL,NULL,Graminoid,1,7,NULL
+Sunset,85,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,1,NULL
+TallWinds,23,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,1,not Dichanthelium
+TallWinds,34,fuel control,graminoid,NULL,NULL,NULL,Graminoid,0,1,NULL
+TallWinds,35,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,1,not Dichanthelium
+TallWinds,38,fuel addition,graminoid,NULL,NULL,NULL,Graminoid,1,1,NULL
+TallWinds,41,fuel addition,graminoid,NULL,NULL,NULL,Graminoid,1,5,not Dichanthelium
+TallWinds,45,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,4,not Dichanthelium
+TallWinds,49,fuel control,graminoid,NULL,NULL,NULL,Graminoid,1,1,not Dichanthelium ovale
+Sunset,51,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,2,NULL
+Sunset,52,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+Sunset,53,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,1,NULL
+Sunset,54,fuel control,grass,NULL,Poaceae,NULL,Grass,0,6,NULL
+Sunset,56,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+Sunset,57,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,10,NULL
+Sunset,60,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,4,NULL
+Sunset,61,fuel control,grass,NULL,Poaceae,NULL,Grass,0,17,NULL
+Sunset,62,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,9,NULL
+Sunset,64,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+Sunset,65,fuel control,grass,NULL,Poaceae,NULL,Grass,1,4,NULL
+Sunset,66,fuel control,grass,NULL,Poaceae,NULL,Grass,1,24,NULL
+Sunset,67,fuel control,grass,NULL,Poaceae,NULL,Grass,0,3,NULL
+Sunset,68,fuel control,grass,NULL,Poaceae,NULL,Grass,0,14,NULL
+Sunset,70,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,2,NULL
+Sunset,71,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,4,NULL
+Sunset,72,fuel control,grass,NULL,Poaceae,NULL,Grass,0,10,NULL
+Sunset,73,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,1,NULL
+Sunset,74,fuel control,grass,NULL,Poaceae,NULL,Grass,0,63,NULL
+Sunset,75,fuel control,grass,NULL,Poaceae,NULL,Grass,1,41,NULL
+Sunset,76,fuel control,grass,NULL,Poaceae,NULL,Grass,1,4,NULL
+Sunset,77,fuel control,grass,NULL,Poaceae,NULL,Grass,1,8,NULL
+Sunset,78,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,1,NULL
+Sunset,79,fuel control,grass,NULL,Poaceae,NULL,Grass,0,28,NULL
+Sunset,81,fuel control,grass,NULL,Poaceae,NULL,Grass,0,2,NULL
+Sunset,82,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,7,NULL
+Sunset,83,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,4,NULL
+Sunset,84,fuel control,grass,NULL,Poaceae,NULL,Grass,1,5,not Dichanthelium dichotomum var. tenue
+Sunset,85,fuel control,grass,NULL,Poaceae,NULL,Grass,0,4,NULL
+TallWinds,21,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,22,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,1,NULL
+TallWinds,23,fuel control,grass,NULL,Poaceae,NULL,Grass,0,31,NULL
+TallWinds,24,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,6,NULL
+TallWinds,25,fuel control,grass,NULL,Poaceae,NULL,Grass,0,8,NULL
+TallWinds,27,fuel control,grass,NULL,Poaceae,NULL,Grass,0,2,NULL
+TallWinds,29,fuel control,grass,NULL,Poaceae,NULL,Grass,0,7,not Dichanthelium dichotomum var. tenue
+TallWinds,30,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,31,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,32,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,5,NULL
+TallWinds,33,fuel control,grass,NULL,Poaceae,NULL,Grass,0,2,NULL
+TallWinds,34,fuel control,grass,NULL,Poaceae,NULL,Grass,1,1,not Dichanthelium
+TallWinds,35,fuel control,grass,NULL,Poaceae,NULL,Grass,0,44,NULL
+TallWinds,38,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,1,NULL
+TallWinds,39,fuel control,grass,NULL,Poaceae,NULL,Grass,0,6,NULL
+TallWinds,40,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,41,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,16,not Dichanthelium dichotomum var. tenue
+TallWinds,42,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,43,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,0,NULL
+TallWinds,44,fuel control,grass,NULL,Poaceae,NULL,Grass,0,30,NULL
+TallWinds,45,fuel control,grass,NULL,Poaceae,NULL,Grass,1,13,not Dichanthelium dichotomum var. tenue
+TallWinds,46,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,3,NULL
+TallWinds,47,fuel control,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,48,fuel addition,grass,NULL,Poaceae,NULL,Grass,1,1,not Dichanthelium dichotomum var. tenue
+TallWinds,49,fuel control,grass,NULL,Poaceae,NULL,Grass,0,26,NULL
+TallWinds,86,fuel control,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,87,fuel control,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,88,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,1,NULL
+TallWinds,89,fuel addition,grass,NULL,Poaceae,NULL,Grass,0,0,NULL
+TallWinds,90,fuel control,grass,NULL,Poaceae,NULL,Grass,1,18,NULL
+Sunset,80,fuel addition,grass.101,NULL,Poaceae,NULL,Grass,1,4,not Dichanthelium
+Sunset,54,fuel control,grass.103,NULL,Poaceae,NULL,Grass,1,2,not Dichanthelium
+TallWinds,39,fuel control,grass.104,NULL,Poaceae,NULL,Grass,1,2,NULL
+TallWinds,27,fuel control,grass.105,NULL,Poaceae,NULL,Grass,1,1,not Dichanthelium
+Sunset,54,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,3,NULL
+Sunset,57,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,3,NULL
+Sunset,61,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,4,NULL
+Sunset,62,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,1,NULL
+Sunset,65,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,2,NULL
+Sunset,66,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,12,NULL
+Sunset,68,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,6,NULL
+Sunset,70,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,3,NULL
+Sunset,72,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,2,NULL
+Sunset,75,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,2,NULL
+Sunset,76,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,4,NULL
+Sunset,77,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,3,NULL
+Sunset,79,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,4,NULL
+Sunset,82,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,9,NULL
+Sunset,83,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,1,NULL
+Sunset,84,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,1,NULL
+Sunset,85,fuel control,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,4,NULL
+TallWinds,32,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,1,NULL
+TallWinds,38,fuel addition,PHYCAR,Phyllanthus caroliniensis,Euphorbiaceae,Annual,Forb,1,2,NULL
+TallWinds,87,fuel control,TEPSPI,Tephrosia spicata,Fabaceae,Perennial,Legume,1,1,NULL
