@@ -104,4 +104,3 @@ table_s1[is.na(table_s1)]<-0
 view(table_s1)
 
 #VISUALIZATION:Replicate figure s2
-
