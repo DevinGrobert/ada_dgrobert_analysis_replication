@@ -30,6 +30,7 @@ plot(pressure)
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 library(tidyverse)
+library(forcats)
 
 #reading in fire loggers data
 f <- "https://raw.githubusercontent.com/DevinGrobert/ada_dgrobert_analysis_replication/main/FireLoggersCombinedData_DRYAD.csv"
@@ -51,7 +52,7 @@ sb<-sb%>%mutate(Species = replace(Species, Species == "Grass", "Graminoid"))
 #group by species and treatment
 by_sp_tr<-group_by(sb, Species, Treatment)
 
-#create variables for total, max, and frequency.  freq is presence or absence as % of total plots (30 each trt type)
+#create variables for total, max, and frequency.  freq is presence or absence as % of total plots (30 each trt type).  this took quite a bit of guess work to realize
 table_s1<- summarise(
   by_sp_tr,
   Total=sum(Individuals),
@@ -101,6 +102,65 @@ table_s1[is.na(table_s1)]<-0
 
 #thats that
 
-view(table_s1)
+view(fl)
 
-#VISUALIZATION:Replicate figure s2
+#VISUALIZATION:Replicate figure 2.  This is after trying to replicate figure s2 and realizing it represents standing vegetation (data not provided), not seed bank samples (data provided).  I completed plots analagous to S2 but with seed bank data, however realized something was off because my max values were greater than double those depicted in S2.  I should have realized sooner because the seed bank data included no woody species, however figured perhaps some of the legumes were woody (legume is a functional group despite that it would overlap with other functional groups).
+
+p <- fl%>%
+  mutate(Logger.pos = fct_relevel(Logger.pos,
+  "4Below", "2Below", "1Below", "Surface", "Above"))%>%
+  mutate(Fuel.trt = fct_relevel(Fuel.trt,
+  "Increase", "Control", "Reduce"))%>%
+  ggplot(aes(x = Logger.pos, y = Peak.temp))
+p <- p + stat_boxplot(na.rm = TRUE, coef=1.5,  aes(fill = factor(Fuel.trt))) 
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + xlab("Logger position relative to soil surface")
+p <- p + ylab("Temp (C)")
+p <- p + scale_y_continuous(trans='log10')
+p <- p + geom_segment(aes(x=0,xend="1Below",y=60,yend=60))
+p <- p + coord_cartesian(ylim = c(20, 1000))
+p <- p + scale_fill_grey()
+p
+#according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate, perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version and from the hinge in ggplot2.  However, adjusting the aes(ymin) etc did not correct the problem.  Tinkered with coord_cartesian() and trans=log to no avail.  The difference is very slight except for the missing second outlier on "reduced" fuel at the soil surface (0cm).
+
+
+
+
+
+
+?stat_boxplot
+
+
+
+#group by species and treatment
+sp<-group_by(sb, Species,Treatment)
+
+#create table with species, treatment, and a new variable, "Freq", which represents the number of plots for each species/treatment combination
+t<- summarise(
+  sp,
+  Freq=sum(Unique)
+   )
+
+
+#add back functional groups to table "t"
+by_sp<-group_by(sb, Species)
+fg<-summarize(
+  by_sp,
+  FunctionalGroup = FunctionalGroup)
+fg<-unique(fg)
+
+t<-full_join(t, fg, by="Species")
+
+
+con<-filter(t, Treatment == "fuel control")
+trt<-filter(t, Treatment == "fuel addition")
+
+cf<-filter(con, FunctionalGroup == "Forb")
+tf<-filter(trt, FunctionalGroup == "Forb")
+
+par(mfrow = c(2, 3))
+plot(x=cc$Freq, y=tc$Freq)
+
+cc<-filter(con, FunctionalGroup == "C3 Grass")
+tc<-filter(trt, FunctionalGroup == "C3 Grass")
+
