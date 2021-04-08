@@ -112,7 +112,7 @@ p <- fl%>%
   mutate(Fuel.trt = fct_relevel(Fuel.trt,
   "Increase", "Control", "Reduce"))%>%
   ggplot(aes(x = Logger.pos, y = Peak.temp))
-p <- p + stat_boxplot(na.rm = TRUE, coef=1.5,  aes(fill = factor(Fuel.trt))) 
+p <- p + stat_boxplot(na.rm = TRUE,  aes(fill = factor(Fuel.trt))) 
 p <- p + theme(axis.text.x = element_text(angle = 90))
 p <- p + xlab("Logger position relative to soil surface")
 p <- p + ylab("Temp (C)")
@@ -121,17 +121,60 @@ p <- p + geom_segment(aes(x=0,xend="1Below",y=60,yend=60))
 p <- p + coord_cartesian(ylim = c(20, 1000))
 p <- p + scale_fill_grey()
 p
-#according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unlikely choice) and from the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem.  Tinkered with coord_cartesian() and trans=log to no avail.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
+#according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unusual choice) and at the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem ("Error in 1.5 * IQR : non-numeric argument to binary operator").  Tinkered with coord_cartesian() and trans=log, these of course have no bearing.  I also tinkered with the compute_group function in StatBoxplot in order to custom set boxplot limits, nothing consistent with caption for fig 2 improves the similarity between the original and the replicate, also, as soon as the suspect values start to approach allignment, the match deteriorates across other values, thus the defauls in ggplot2 provide the best overall match.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
+
+#this code, from Z.Lin via stackexchange, allows one to tinker with the boxplot limits, which reveals that whatever the authors did with the boxplot limits in the "surface" group must be inconsistent with the ggplot2 defaults, the caption to fig 2, and all other groups:
+
+# save a copy of the original function, in case you need to revert
+original.function <- environment(ggplot2::StatBoxplot$compute_group)$f
+
+# define new function (only the first line for qs is changed, but you'll have to
+# copy & paste the whole thing)
+new.function <- function (data, scales, width = NULL, na.rm = FALSE, coef = 1.5) {
+  qs <- c(0, 0.1, 0.5, 0.6, 0.75)
+  if (!is.null(data$weight)) {
+    mod <- quantreg::rq(y ~ 1, weights = weight, data = data, 
+                        tau = qs)
+    stats <- as.numeric(stats::coef(mod))
+  }
+  else {
+    stats <- as.numeric(stats::quantile(data$y, qs))
+  }
+  names(stats) <- c("ymin", "lower", "middle", "upper", "ymax")
+  iqr <- diff(stats[c(2, 4)])
+  outliers <- data$y < (stats[2] - coef * iqr) | data$y > (stats[4] + 
+                                                             coef * iqr)
+  if (any(outliers)) {
+    stats[c(1, 5)] <- range(c(stats[2:4], data$y[!outliers]), 
+                            na.rm = TRUE)
+  }
+  if (length(unique(data$x)) > 1) 
+    width <- diff(range(data$x)) * 0.9
+  df <- as.data.frame(as.list(stats))
+  df$outliers <- list(data$y[outliers])
+  if (is.null(data$weight)) {
+    n <- sum(!is.na(data$y))
+  }
+  else {
+    n <- sum(data$weight[!is.na(data$y) & !is.na(data$weight)])
+  }
+  df$notchupper <- df$middle + 1.58 * iqr/sqrt(n)
+  df$notchlower <- df$middle - 1.58 * iqr/sqrt(n)
+  df$x <- if (is.factor(data$x)) 
+    data$x[1]
+  else mean(range(data$x))
+  df$width <- width
+  df$relvarwidth <- sqrt(n)
+  df
+}
+
+# toggle between the two definitions
+environment(StatBoxplot$compute_group)$f <- original.function
 
 
+environment(StatBoxplot$compute_group)$f <- new.function
 
-
-
-
-?stat_boxplot
-
-
-
+#this is the code used in my attempt to replicate fig s2, with the seed bank data, before realizing it actually uses standing live veg data that they did not provide on DRYAD:
 #group by species and treatment
 sp<-group_by(sb, Species,Treatment)
 
@@ -151,16 +194,17 @@ fg<-unique(fg)
 
 t<-full_join(t, fg, by="Species")
 
-
+#split control and trt for the 2 axis:
 con<-filter(t, Treatment == "fuel control")
 trt<-filter(t, Treatment == "fuel addition")
-
+#filter out forb functional group:
 cf<-filter(con, FunctionalGroup == "Forb")
 tf<-filter(trt, FunctionalGroup == "Forb")
 
-par(mfrow = c(2, 3))
-plot(x=cc$Freq, y=tc$Freq)
+#this should match the first plot in fig s2:
+plot(x=cf$Freq, y=tf$Freq)
 
-cc<-filter(con, FunctionalGroup == "C3 Grass")
-tc<-filter(trt, FunctionalGroup == "C3 Grass")
+#my maximums are too high, there is no way their figure represents the data they provided.  I realize the caption is vague and recall from the article text that they have another data set they did not provide.
+
+
 
