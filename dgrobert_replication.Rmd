@@ -121,7 +121,7 @@ p <- p + geom_segment(aes(x=0,xend="1Below",y=60,yend=60))
 p <- p + coord_cartesian(ylim = c(20, 1000))
 p <- p + scale_fill_grey()
 p
-#according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate, perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version and from the hinge in ggplot2.  However, adjusting the aes(ymin) etc did not correct the problem.  Tinkered with coord_cartesian() and trans=log to no avail.  The difference is very slight except for the missing second outlier on "reduced" fuel at the soil surface (0cm).
+#according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unlikely choice) and from the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem.  Tinkered with coord_cartesian() and trans=log to no avail.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
 
 
 
