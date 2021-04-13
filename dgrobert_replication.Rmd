@@ -31,6 +31,8 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 library(tidyverse)
 library(forcats)
+library(ggpmisc)
+library(broom)
 
 #reading in fire loggers data
 f <- "https://raw.githubusercontent.com/DevinGrobert/ada_dgrobert_analysis_replication/main/FireLoggersCombinedData_DRYAD.csv"
@@ -123,6 +125,110 @@ p <- p + scale_fill_grey()
 p
 #according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unusual choice) and at the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem ("Error in 1.5 * IQR : non-numeric argument to binary operator").  Tinkered with coord_cartesian() and trans=log, these of course have no bearing.  I also tinkered with the compute_group function in StatBoxplot in order to custom set boxplot limits, nothing consistent with caption for fig 2 improves the similarity between the original and the replicate, also, as soon as the suspect values start to approach allignment, the match deteriorates across other values, thus the defauls in ggplot2 provide the best overall match.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
 
+#INFERENCE: replicate figure S1
+#S1A
+#filter 1 cm below obs
+one_b<-filter(fl, Logger.pos=="1Below")
+#filter surface obs
+surf<-filter(fl, Logger.pos=="Surface")
+#keep duration for surface, max temp increase for 1 below, fuel trt for either one (arbitrarily 1 below), and plot number so they can be joined
+surf<-subset(surf, select=c(Duration.emp, Plot.no))
+one_b<-subset(one_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+#join duration for surface and max temp for 1 below
+s1a<-full_join(one_b, surf, by = "Plot.no")
+view(s1a)
+
+#create plot
+p <- s1a %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+#different symbols for different fuel treatments
+p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
+p <- p + scale_color_grey() + theme_classic()
+#match the axes coordinates
+p <- p + coord_cartesian(ylim = c(2, 50), xlim = c(2, 50))
+#add best fit line
+p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+#insert r^2 and p values
+p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+
+p
+
+#summarise linear model outputs
+lm_log_s1a = lm(log(Max.temp.incr)~log(Duration.emp), data = s1a)
+summary(lm_log_s1a)
+
+#S1B
+
+#filter 1 cm below obs
+one_b<-filter(fl, Logger.pos=="1Below")
+
+#filter surface obs
+surf<-filter(fl, Logger.pos=="Surface")
+
+#keep max temp increase for surface, max temp increase for 1 below, fuel trt for either one (arbitrarily 1 below), and plot number so they can be joined
+surf<-subset(surf, select=c(Max.temp.incr, Plot.no))
+one_b<-subset(one_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+
+#change variable names for clarity
+surf$Max.temp.surf<-surf$Max.temp.incr
+surf$Max.temp.incr<-NULL
+one_b$Max.temp.one_b<-one_b$Max.temp.incr
+one_b$Max.temp.incr<-NULL
+
+#join max temp for surface and 1 below
+s1b<-full_join(one_b, surf, by = "Plot.no")
+view(s1b)
+
+#create plot
+p <- s1b %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.one_b))
+#different symbols for different fuel treatments
+p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
+p <- p + scale_color_grey() + theme_classic()
+#match the axes coordinates
+p <- p + coord_cartesian(ylim = c(2, 50), xlim = c(10, 500))
+
+#insert NS label
+p <- p + stat_poly_eq(formula = log(y)~log(x), aes(label = paste0("NS")), label.x="left", label.y="top", na.rm=TRUE)
+
+
+p
+
+#summarise linear model outputs
+lm_log_s1b = lm(log(Max.temp.one_b)~log(Max.temp.surf), data = s1b)
+summary(lm_log_s1b)
+
+#S1C
+#filter 2 cm below obs
+two_b<-filter(fl, Logger.pos=="2Below")
+#filter surface obs
+surf<-filter(fl, Logger.pos=="Surface")
+#keep duration for surface, max temp increase for 2 below, fuel trt for either one (arbitrarily 2 below), and plot number so they can be joined
+surf<-subset(surf, select=c(Duration.emp, Plot.no))
+two_b<-subset(two_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+#join duration for surface and max temp for 1 below
+s1c<-full_join(two_b, surf, by = "Plot.no")
+view(s1c)
+
+#create plot
+p <- s1c %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+#different symbols for different fuel treatments
+p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
+p <- p + scale_color_grey() + theme_classic()
+#match the axes coordinates
+p <- p + coord_cartesian(ylim = c(2, 50), xlim = c(2, 50))
+#add best fit line
+p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+#insert r^2 and p values
+p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+p
+
+#summarise linear model outputs
+lm_log_s1c = lm(log(Max.temp.incr)~log(Duration.emp), data = s1c)
+summary(lm_log_s1c)
+
+#ADDENDUM: scrapped code from visualization:
+
 #this code, from Z.Lin via stackexchange, allows one to tinker with the boxplot limits, which reveals that whatever the authors did with the boxplot limits in the "surface" group must be inconsistent with the ggplot2 defaults, the caption to fig 2, and all other groups:
 
 # save a copy of the original function, in case you need to revert
@@ -201,10 +307,10 @@ trt<-filter(t, Treatment == "fuel addition")
 cf<-filter(con, FunctionalGroup == "Forb")
 tf<-filter(trt, FunctionalGroup == "Forb")
 
-#this should match the first plot in fig s2:
+#this should start to match the first plot in fig s2, though will need to modify so overlapping dots show up as bigger dots:
 plot(x=cf$Freq, y=tf$Freq)
 
-#my maximums are too high, there is no way their figure represents the data they provided.  I realize the caption is vague and recall from the article text that they have another data set they did not provide.
+#my maximums are too high, there is no way figure s2 represents the data they provided.  I realize the caption is vague and recall from the article text that they have another data set they did not provide.
 
 
 
