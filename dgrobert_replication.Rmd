@@ -106,7 +106,7 @@ table_s1[is.na(table_s1)]<-0
 
 view(fl)
 
-#VISUALIZATION:Replicate figure 2.  This is after trying to replicate figure s2 and realizing it represents standing vegetation (data not provided), not seed bank samples (data provided).  I completed plots analagous to S2 but with seed bank data, however realized something was off because my max values were greater than double those depicted in S2.  I should have realized sooner because the seed bank data included no woody species, however figured perhaps some of the legumes were woody (legume is a functional group despite that it would overlap with other functional groups).
+#VISUALIZATION:Replicate figure 2.  This is after trying to replicate figure s2 and realizing it represents standing vegetation (data not provided), not seed bank samples (data provided).  I completed plots analagous to S2 but with seed bank data, however realized something was off because my max values were greater than double those depicted in S2.  I should have realized sooner because the seed bank data included no woody species, however figured perhaps some of the legumes were woody (legume is treated as a discrete functional group despite that it would overlap with other functional groups).
 
 p <- fl%>%
   mutate(Logger.pos = fct_relevel(Logger.pos,
@@ -125,7 +125,7 @@ p <- p + scale_fill_grey()
 p
 #according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unusual choice) and at the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem ("Error in 1.5 * IQR : non-numeric argument to binary operator").  Tinkered with coord_cartesian() and trans=log, these of course have no bearing.  I also tinkered with the compute_group function in StatBoxplot in order to custom set boxplot limits, nothing consistent with caption for fig 2 improves the similarity between the original and the replicate, also, as soon as the suspect values start to approach allignment, the match deteriorates across other values, thus the defauls in ggplot2 provide the best overall match.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
 
-#INFERENCE: replicate figure S1
+#INFERENCE: replicate figure S1, which is a visualization labeled with inferential statistics.  I've also included more detailed outputs from the linear models these figures are based on.
 #S1A
 #filter 1 cm below obs
 one_b<-filter(fl, Logger.pos=="1Below")
@@ -140,16 +140,16 @@ view(s1a)
 
 #create plot
 p <- s1a %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+#scale the axes
+p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
 #different symbols for different fuel treatments
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
-#match the axes coordinates
-p <- p + coord_cartesian(ylim = c(2, 50), xlim = c(2, 50))
 #add best fit line
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
 #insert r^2 and p values
-p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
-p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
 
 p
 
@@ -181,14 +181,14 @@ view(s1b)
 
 #create plot
 p <- s1b %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.one_b))
+#scale the axes
+p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
 #different symbols for different fuel treatments
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
-#match the axes coordinates
-p <- p + coord_cartesian(ylim = c(2, 50), xlim = c(10, 500))
 
 #insert NS label
-p <- p + stat_poly_eq(formula = log(y)~log(x), aes(label = paste0("NS")), label.x="left", label.y="top", na.rm=TRUE)
+p <- p + stat_poly_eq(formula = y~x, aes(label = paste0("NS")), label.x="left", label.y="top", na.rm=TRUE)
 
 
 p
@@ -211,23 +211,141 @@ view(s1c)
 
 #create plot
 p <- s1c %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+#scale the axes
+p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
 #different symbols for different fuel treatments
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
-#match the axes coordinates
-p <- p + coord_cartesian(ylim = c(2, 50), xlim = c(2, 50))
 #add best fit line
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
 #insert r^2 and p values
-p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
-p <- p + stat_poly_eq(na.rm=TRUE, formula = log(y)~log(x), aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+#view plot
 p
+
 
 #summarise linear model outputs
 lm_log_s1c = lm(log(Max.temp.incr)~log(Duration.emp), data = s1c)
 summary(lm_log_s1c)
 
+#S1D
+
+#filter 2 cm below obs
+two_b<-filter(fl, Logger.pos=="2Below")
+
+#filter surface obs
+surf<-filter(fl, Logger.pos=="Surface")
+
+#keep max temp increase for surface, max temp increase for 2 below, fuel trt for either one (arbitrarily 2 below), and plot number so they can be joined
+surf<-subset(surf, select=c(Max.temp.incr, Plot.no))
+two_b<-subset(two_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+
+#change variable names for clarity
+surf$Max.temp.surf<-surf$Max.temp.incr
+surf$Max.temp.incr<-NULL
+two_b$Max.temp.two_b<-two_b$Max.temp.incr
+two_b$Max.temp.incr<-NULL
+
+#join max temp for surface and 1 below
+s1d<-full_join(two_b, surf, by = "Plot.no")
+view(s1d)
+
+#create plot
+p <- s1d %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.two_b))
+#scale the axes
+p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+#different symbols for different fuel treatments
+p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
+p <- p + scale_color_grey() + theme_classic()
+#add best fit line
+p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+#insert r^2 and p values
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+#view plot
+p
+
+#summarize linear model outputs
+lm_log_s1d = lm(log(Max.temp.two_b)~log(Max.temp.surf), data = s1d)
+summary(lm_log_s1d)
+
+#S1E
+#filter 2 cm below obs
+four_b<-filter(fl, Logger.pos=="4Below")
+#filter surface obs
+surf<-filter(fl, Logger.pos=="Surface")
+#keep duration for surface, max temp increase for 4 below, fuel trt for either one (arbitrarily 4 below), and plot number so they can be joined
+surf<-subset(surf, select=c(Duration.emp, Plot.no))
+four_b<-subset(four_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+#join duration for surface and max temp for 1 below
+s1e<-full_join(four_b, surf, by = "Plot.no")
+view(s1e)
+
+#create plot
+p <- s1e %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+#scale the axes
+p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+#different symbols for different fuel treatments
+p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
+p <- p + scale_color_grey() + theme_classic()
+#add best fit line
+p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+#insert r^2 and p values
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+#view plot
+p
+
+
+#summarise linear model outputs
+lm_log_s1e = lm(log(Max.temp.incr)~log(Duration.emp), data = s1e)
+summary(lm_log_s1e)
+
+#S1F
+
+#filter 4 cm below obs
+four_b<-filter(fl, Logger.pos=="4Below")
+
+#filter surface obs
+surf<-filter(fl, Logger.pos=="Surface")
+
+#keep max temp increase for surface, max temp increase for 4 below, fuel trt for either one (arbitrarily 4 below), and plot number so they can be joined
+surf<-subset(surf, select=c(Max.temp.incr, Plot.no))
+four_b<-subset(four_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+
+#change variable names for clarity
+surf$Max.temp.surf<-surf$Max.temp.incr
+surf$Max.temp.incr<-NULL
+four_b$Max.temp.four_b<-four_b$Max.temp.incr
+four_b$Max.temp.incr<-NULL
+
+#join max temp for surface and 1 below
+s1f<-full_join(four_b, surf, by = "Plot.no")
+view(s1f)
+
+#create plot
+p <- s1f %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.four_b))
+#scale the axes
+p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+#different symbols for different fuel treatments
+p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
+p <- p + scale_color_grey() + theme_classic()
+#add best fit line
+p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+#insert r^2 and p values
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
+p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
+#view plot
+p
+
+#summarize linear model outputs
+lm_log_s1f = lm(log(Max.temp.four_b)~log(Max.temp.surf), data = s1f)
+summary(lm_log_s1f)
+
 #ADDENDUM: scrapped code from visualization:
+
+![an image caption Testing out embedded images.](https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/main/fig_s1d.JPG)
 
 #this code, from Z.Lin via stackexchange, allows one to tinker with the boxplot limits, which reveals that whatever the authors did with the boxplot limits in the "surface" group must be inconsistent with the ggplot2 defaults, the caption to fig 2, and all other groups:
 
