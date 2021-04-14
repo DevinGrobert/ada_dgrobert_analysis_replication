@@ -99,10 +99,10 @@ table_s1[is.na(table_s1)]<-0
 ```
 #thats that.  replicate
 ```{r}
-view(table_s1)
+print(table_s1)
 ```
 #original
-<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/table_s1_gagnon2015.JPG" width="200px"/>
+<img src="img/table_s1_gagnon2015.JPG" width="600px"/>
 
 ##VISUALIZATION:Replicate figure 2.  This is after trying to replicate figure s2 and realizing it represents standing vegetation (data not provided), not seed bank samples (data provided).  I completed plots analagous to S2 but with seed bank data, however realized something was off because my max values were greater than double those depicted in S2.  I should have realized sooner because the seed bank data included no woody species, however figured perhaps some of the legumes were woody (legume is treated as a discrete functional group despite that it would overlap with other functional groups).
 ```{r}
