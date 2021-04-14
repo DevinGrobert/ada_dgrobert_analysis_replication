@@ -4,68 +4,56 @@ author: "deving"
 date: "4/6/2021"
 output: html_document
 ---
+##INTRODUCTION
+#The data I am working with is from a paper called *"Fuels and fires influence vegetation via above and belowground pathways in a high-diversity plant community"*.  See bottom of this document for complete citation.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
+#The goal of the study was to investigate the effect of soil heating from fire on vegetation in a southeastern Longleaf Pine savanna, a naturally pyrogenic and high-diversity system. The investigators placed high-resolution thermocouples in vertical profile above and belowground, and manipulated fine fuel biomass loading.  They measured vegetation response both in the seedbank as well as in standing live vegetation following treatment.  Fire duration impacted soil heating and vegetation response, whereas fire temperature did not impact vegetation response.  This study analyzed data from these field experiments with structural equation modeling.  I chose this study because it leverages a variety of statistical analyses as inputs towards the structural equation model.  For descriptive statistics, I have chosen to replicate Table S1, which describes the abundance and frequency of species emerging from soil seed bank samples.  For visualization, I have chosen to replicate Figure 2, which is a boxplot of aboveground and belowground temperatures in the three fuel treatments.  For inferential statistics, I replicated Figure S1, which is a series of bivariate regressions comparing soil heating with fire duration and surface temperature increase, and also provided more detailed summaries of these regressions.
+```{r}
 library(tidyverse)
 library(forcats)
 library(ggpmisc)
 library(broom)
-
-#reading in fire loggers data
+```
+#read in fire loggers data
+```{r}
 f <- "https://raw.githubusercontent.com/DevinGrobert/ada_dgrobert_analysis_replication/main/FireLoggersCombinedData_DRYAD.csv"
 fl <- read_csv(f, col_types = NULL, col_names=TRUE)
-view(fl)
+```
 
-#reading in seed bank data
+#read in seed bank data
+```{r}
 s <- "https://raw.githubusercontent.com/DevinGrobert/ada_dgrobert_analysis_replication/main/SeedBankProjectData_Dryad.csv"
 sb <- read_csv(s, col_types = NULL, col_names=TRUE)
-view(sb)
+```
 
 #DESCRIPTIVE STATISTICS: replicate Table S1
 #replace null values in species with functional group
+```{r}
 sb<-sb%>%mutate(Species = replace(Species, Species == "NULL", FunctionalGroup[Species=="NULL"]))
-
+```
 #replace grass with graminoid in place of missing grass species
+```{r}
 sb<-sb%>%mutate(Species = replace(Species, Species == "Grass", "Graminoid"))
-
+```
 #group by species and treatment
+```{r}
 by_sp_tr<-group_by(sb, Species, Treatment)
-
+```
 #create variables for total, max, and frequency.  freq is presence or absence as % of total plots (30 each trt type).  this took quite a bit of guess work to realize
+```{r}
 table_s1<- summarise(
   by_sp_tr,
   Total=sum(Individuals),
   Max=max(Individuals),
   Freq=sum(Unique)/30*100
    )
-
+```
 #round down to the nearest integer
+```{r}
 table_s1$Freq<-floor(table_s1$Freq)
-
+```
 #separate out controls and treatments, change variable names so they can be rejoined
+```{r}
 controls<-filter(table_s1, Treatment == "fuel control")
 colnames(controls)<-paste("control_fuel", colnames(controls), sep="_")
 controls$Species<-controls$control_fuel_Species
@@ -77,11 +65,13 @@ colnames(treats)<-paste("increased_fuel", colnames(treats), sep="_")
 treats$Species<-treats$increased_fuel_Species
 treats$increased_fuel_Treatment=NULL
 treats$increased_fuel_Species<-NULL
-
+```
 #rejoin controls and treatments into a single table
+```{r}
 table_s1<-full_join(controls, treats, by = "Species")
-
+```
 #add back functional groups
+```{r}
 by_sp<-group_by(sb, Species)
 sb_fg<-summarize(
   by_sp,
@@ -89,25 +79,33 @@ sb_fg<-summarize(
 sb_fg<-unique(sb_fg)
 
 table_s1<-full_join(table_s1, sb_fg, by="Species")
-
+```
 #delete oddball row for sp "graminoid" fg "grass" (redundant with sp "graminoid" fg "graminoid")
+```{r}
 table_s1<-table_s1[-c(11),]
-
+```
 #reorder columns
+```{r}
 table_s1<-table_s1[c(4,8,1,2,3,5,6,7)]
+```
 #reorder rows
+```{r}
 table_s1<-table_s1[order(table_s1$Species),]
 table_s1<-table_s1[c(1,3:5,2,6:9,12,13,11,10),]
-
+```
 #replace NA with 0
+```{r}
 table_s1[is.na(table_s1)]<-0
+```
+#thats that.  replicate
+```{r}
+view(table_s1)
+```
+#original
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/table_s1_gagnon2015.JPG" width="200px"/>
 
-#thats that
-
-view(fl)
-
-#VISUALIZATION:Replicate figure 2.  This is after trying to replicate figure s2 and realizing it represents standing vegetation (data not provided), not seed bank samples (data provided).  I completed plots analagous to S2 but with seed bank data, however realized something was off because my max values were greater than double those depicted in S2.  I should have realized sooner because the seed bank data included no woody species, however figured perhaps some of the legumes were woody (legume is treated as a discrete functional group despite that it would overlap with other functional groups).
-
+##VISUALIZATION:Replicate figure 2.  This is after trying to replicate figure s2 and realizing it represents standing vegetation (data not provided), not seed bank samples (data provided).  I completed plots analagous to S2 but with seed bank data, however realized something was off because my max values were greater than double those depicted in S2.  I should have realized sooner because the seed bank data included no woody species, however figured perhaps some of the legumes were woody (legume is treated as a discrete functional group despite that it would overlap with other functional groups).
+```{r}
 p <- fl%>%
   mutate(Logger.pos = fct_relevel(Logger.pos,
   "4Below", "2Below", "1Below", "Surface", "Above"))%>%
@@ -122,238 +120,367 @@ p <- p + scale_y_continuous(trans='log10')
 p <- p + geom_segment(aes(x=0,xend="1Below",y=60,yend=60))
 p <- p + coord_cartesian(ylim = c(20, 1000))
 p <- p + scale_fill_grey()
+```
+#replicate
+```{r}
 p
-#according to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unusual choice) and at the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem ("Error in 1.5 * IQR : non-numeric argument to binary operator").  Tinkered with coord_cartesian() and trans=log, these of course have no bearing.  I also tinkered with the compute_group function in StatBoxplot in order to custom set boxplot limits, nothing consistent with caption for fig 2 improves the similarity between the original and the replicate, also, as soon as the suspect values start to approach allignment, the match deteriorates across other values, thus the defauls in ggplot2 provide the best overall match.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
+```
+#original
 
-#INFERENCE: replicate figure S1, which is a visualization labeled with inferential statistics.  I've also included more detailed outputs from the linear models these figures are based on.
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_2_gagnon2015.JPG" width="200px"/>
+
+#According to the fig 2 caption, the whisker extends to 1.5 times the IQR, which may be different from the ggplot default, which is "largest observation less than or equal to upper hinge+1.5*IQR" for ymax (the same for ymin).  So a single outlier shows in fig 2 that does not show up in fig 2 replicate (and two vice versa), perhaps because the whisker length of 1.5*IQR (common to both) originates at the mean in the published version (either an error or an unusual choice) and at the hinge in ggplot2 (conventional and logical).  However, adjusting the aes(ymin) did not correct the problem ("Error in 1.5 * IQR : non-numeric argument to binary operator").  Tinkered with coord_cartesian() and trans=log, these of course have no bearing.  I also tinkered with the compute_group function in StatBoxplot in order to custom set boxplot limits, nothing consistent with caption for fig 2 improves the similarity between the original and the replicate, also, as soon as the suspect values start to approach allignment, the match deteriorates across other values, thus the defauls in ggplot2 provide the best overall match.  The difference is very slight except for the phantom outliers on "control" & "reduced" fuel at the soil surface (0cm).
+
+##INFERENCE: replicate figure S1, which is a visualization labeled with inferential statistics.  I've also included more detailed outputs from the linear models these figures are based on.
 #S1A
 #filter 1 cm below obs
+```{r}
 one_b<-filter(fl, Logger.pos=="1Below")
+```
 #filter surface obs
+```{r}
 surf<-filter(fl, Logger.pos=="Surface")
+```
 #keep duration for surface, max temp increase for 1 below, fuel trt for either one (arbitrarily 1 below), and plot number so they can be joined
+```{r}
 surf<-subset(surf, select=c(Duration.emp, Plot.no))
 one_b<-subset(one_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+```
 #join duration for surface and max temp for 1 below
+```{r}
 s1a<-full_join(one_b, surf, by = "Plot.no")
 view(s1a)
-
+```
 #create plot
+```{r}
 p <- s1a %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+```
 #scale the axes
+```{r}
 p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+```
 #different symbols for different fuel treatments
+```{r}
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
+```
 #add best fit line
+```{r}
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+```
 #insert r^2 and p values
+```{r}
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
-
+```
+#replicate
+```{r}
 p
+```
+#original
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_s1a.JPG" width="200px"/>
 
 #summarise linear model outputs
+```{r}
 lm_log_s1a = lm(log(Max.temp.incr)~log(Duration.emp), data = s1a)
 summary(lm_log_s1a)
-
+```
 #S1B
 
 #filter 1 cm below obs
+```{r}
 one_b<-filter(fl, Logger.pos=="1Below")
-
+```
 #filter surface obs
+```{r}
 surf<-filter(fl, Logger.pos=="Surface")
-
+```
 #keep max temp increase for surface, max temp increase for 1 below, fuel trt for either one (arbitrarily 1 below), and plot number so they can be joined
+```{r}
 surf<-subset(surf, select=c(Max.temp.incr, Plot.no))
 one_b<-subset(one_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
-
+```
 #change variable names for clarity
+```{r}
 surf$Max.temp.surf<-surf$Max.temp.incr
 surf$Max.temp.incr<-NULL
 one_b$Max.temp.one_b<-one_b$Max.temp.incr
 one_b$Max.temp.incr<-NULL
-
+```
 #join max temp for surface and 1 below
+```{r}
 s1b<-full_join(one_b, surf, by = "Plot.no")
 view(s1b)
-
+```
 #create plot
+```{r}
 p <- s1b %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.one_b))
+```
 #scale the axes
+```{r}
 p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+```
 #different symbols for different fuel treatments
+```{r}
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
-
+```
 #insert NS label
+```{r}
 p <- p + stat_poly_eq(formula = y~x, aes(label = paste0("NS")), label.x="left", label.y="top", na.rm=TRUE)
-
-
+```
+#replicate
+```{r}
 p
+```
+#original
+
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_s1b.JPG" width="200px"/>
 
 #summarise linear model outputs
+```{r}
 lm_log_s1b = lm(log(Max.temp.one_b)~log(Max.temp.surf), data = s1b)
 summary(lm_log_s1b)
-
+```
 #S1C
 #filter 2 cm below obs
+```{r}
 two_b<-filter(fl, Logger.pos=="2Below")
+```
 #filter surface obs
+```{r}
 surf<-filter(fl, Logger.pos=="Surface")
+```
 #keep duration for surface, max temp increase for 2 below, fuel trt for either one (arbitrarily 2 below), and plot number so they can be joined
+```{r}
 surf<-subset(surf, select=c(Duration.emp, Plot.no))
 two_b<-subset(two_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+```
 #join duration for surface and max temp for 1 below
+```{r}
 s1c<-full_join(two_b, surf, by = "Plot.no")
-view(s1c)
-
+```
 #create plot
+```{r}
 p <- s1c %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+```
 #scale the axes
+```{r}
 p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+```
 #different symbols for different fuel treatments
+```{r}
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
+```
 #add best fit line
+```{r}
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+```
 #insert r^2 and p values
+```{r}
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
-#view plot
+```
+#replicate
+```{r}
 p
+```
+#original
 
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_s1c.JPG" width="200px"/>
 
 #summarise linear model outputs
+```{r}
 lm_log_s1c = lm(log(Max.temp.incr)~log(Duration.emp), data = s1c)
 summary(lm_log_s1c)
-
+```
 #S1D
 
 #filter 2 cm below obs
+```{r}
 two_b<-filter(fl, Logger.pos=="2Below")
-
+```
 #filter surface obs
+```{r}
 surf<-filter(fl, Logger.pos=="Surface")
-
+```
 #keep max temp increase for surface, max temp increase for 2 below, fuel trt for either one (arbitrarily 2 below), and plot number so they can be joined
+```{r}
 surf<-subset(surf, select=c(Max.temp.incr, Plot.no))
 two_b<-subset(two_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
-
+```
 #change variable names for clarity
+```{r}
 surf$Max.temp.surf<-surf$Max.temp.incr
 surf$Max.temp.incr<-NULL
 two_b$Max.temp.two_b<-two_b$Max.temp.incr
 two_b$Max.temp.incr<-NULL
-
+```
 #join max temp for surface and 1 below
+```{r}
 s1d<-full_join(two_b, surf, by = "Plot.no")
-view(s1d)
-
+```
 #create plot
+```{r}
 p <- s1d %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.two_b))
+```
 #scale the axes
+```{r}
 p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+```
 #different symbols for different fuel treatments
+```{r}
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
+```
 #add best fit line
+```{r}
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+```
 #insert r^2 and p values
+```{r}
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
-#view plot
+```
+#replicate
+```{r}
 p
+```
+#original
+
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_s1d.JPG" width="200px"/>
 
 #summarize linear model outputs
+```{r}
 lm_log_s1d = lm(log(Max.temp.two_b)~log(Max.temp.surf), data = s1d)
 summary(lm_log_s1d)
-
+```
 #S1E
 #filter 2 cm below obs
+```{r}
 four_b<-filter(fl, Logger.pos=="4Below")
+```
 #filter surface obs
+```{r}
 surf<-filter(fl, Logger.pos=="Surface")
+```
 #keep duration for surface, max temp increase for 4 below, fuel trt for either one (arbitrarily 4 below), and plot number so they can be joined
+```{r}
 surf<-subset(surf, select=c(Duration.emp, Plot.no))
 four_b<-subset(four_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
+```
 #join duration for surface and max temp for 1 below
+```{r}
 s1e<-full_join(four_b, surf, by = "Plot.no")
-view(s1e)
+```
 
 #create plot
+```{r}
 p <- s1e %>% ggplot(aes(x=Duration.emp, y=Max.temp.incr))
+```
 #scale the axes
+```{r}
 p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+```
 #different symbols for different fuel treatments
+```{r}
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
+```
 #add best fit line
+```{r}
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+```
 #insert r^2 and p values
+```{r}
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
-#view plot
+```
+#replicate
 p
+#original
 
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_s1e.JPG" width="200px"/>
 
 #summarise linear model outputs
+```{r}
 lm_log_s1e = lm(log(Max.temp.incr)~log(Duration.emp), data = s1e)
 summary(lm_log_s1e)
-
+```
 #S1F
 
 #filter 4 cm below obs
+```{r}
 four_b<-filter(fl, Logger.pos=="4Below")
-
+```
 #filter surface obs
+```{r}
 surf<-filter(fl, Logger.pos=="Surface")
-
+```
 #keep max temp increase for surface, max temp increase for 4 below, fuel trt for either one (arbitrarily 4 below), and plot number so they can be joined
+```{r}
 surf<-subset(surf, select=c(Max.temp.incr, Plot.no))
 four_b<-subset(four_b, select=c(Max.temp.incr, Plot.no, Fuel.trt))
-
+```
 #change variable names for clarity
+```{r}
 surf$Max.temp.surf<-surf$Max.temp.incr
 surf$Max.temp.incr<-NULL
 four_b$Max.temp.four_b<-four_b$Max.temp.incr
 four_b$Max.temp.incr<-NULL
-
+```
 #join max temp for surface and 1 below
+```{r}
 s1f<-full_join(four_b, surf, by = "Plot.no")
-view(s1f)
+```
 
 #create plot
+```{r}
 p <- s1f %>% ggplot(aes(x=Max.temp.surf, y=Max.temp.four_b))
+```
 #scale the axes
+```{r}
 p <- p + scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10')
+```
 #different symbols for different fuel treatments
+```{r}
 p <- p + geom_point(na.rm=TRUE, aes(shape=Fuel.trt, color=Fuel.trt)) + scale_shape_manual(values=c(5, 19, 19))
 p <- p + scale_color_grey() + theme_classic()
+```
 #add best fit line
+```{r}
 p <- p + stat_smooth(na.rm=TRUE, method = "lm", se=TRUE, color = "black", formula = y~x)
+```
 #insert r^2 and p values
+```{r}
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)), rr.digits=3, label.x="left", label.y="top")
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
-#view plot
+```
+#replicate
 p
+#original
+
+<img src="https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/610d9c857dd651baf1f0725bfdae21f2566de83d/fig_s1f.JPG" width="200px"/>
 
 #summarize linear model outputs
+```{r}
 lm_log_s1f = lm(log(Max.temp.four_b)~log(Max.temp.surf), data = s1f)
 summary(lm_log_s1f)
+```
+##ADDENDUM: scrapped code from visualization:
 
-#ADDENDUM: scrapped code from visualization:
 
-![an image caption Testing out embedded images.](https://github.com/DevinGrobert/ada_dgrobert_analysis_replication/blob/main/fig_s1d.JPG)
 
-#this code, from Z.Lin via stackexchange, allows one to tinker with the boxplot limits, which reveals that whatever the authors did with the boxplot limits in the "surface" group must be inconsistent with the ggplot2 defaults, the caption to fig 2, and all other groups:
+#This code, from Z.Lin via stackexchange, allows one to tinker with the boxplot limits, which reveals that whatever the authors did with the boxplot limits in the "surface" group must be inconsistent with the ggplot2 defaults, the caption to fig 2, and all other groups:
 
 # save a copy of the original function, in case you need to revert
+```{r}
 original.function <- environment(ggplot2::StatBoxplot$compute_group)$f
-
+```
 # define new function (only the first line for qs is changed, but you'll have to
 # copy & paste the whole thing)
+```{r}
 new.function <- function (data, scales, width = NULL, na.rm = FALSE, coef = 1.5) {
   qs <- c(0, 0.1, 0.5, 0.6, 0.75)
   if (!is.null(data$weight)) {
@@ -391,25 +518,28 @@ new.function <- function (data, scales, width = NULL, na.rm = FALSE, coef = 1.5)
   df$relvarwidth <- sqrt(n)
   df
 }
-
+```
 # toggle between the two definitions
+```{r}
 environment(StatBoxplot$compute_group)$f <- original.function
 
-
 environment(StatBoxplot$compute_group)$f <- new.function
-
+```
 #this is the code used in my attempt to replicate fig s2, with the seed bank data, before realizing it actually uses standing live veg data that they did not provide on DRYAD:
 #group by species and treatment
+```{r}
 sp<-group_by(sb, Species,Treatment)
-
+```
 #create table with species, treatment, and a new variable, "Freq", which represents the number of plots for each species/treatment combination
+```{r}
 t<- summarise(
   sp,
   Freq=sum(Unique)
    )
-
+```
 
 #add back functional groups to table "t"
+```{r}
 by_sp<-group_by(sb, Species)
 fg<-summarize(
   by_sp,
@@ -417,18 +547,22 @@ fg<-summarize(
 fg<-unique(fg)
 
 t<-full_join(t, fg, by="Species")
-
+```
 #split control and trt for the 2 axis:
+```{r}
 con<-filter(t, Treatment == "fuel control")
 trt<-filter(t, Treatment == "fuel addition")
+```
 #filter out forb functional group:
+```{r}
 cf<-filter(con, FunctionalGroup == "Forb")
 tf<-filter(trt, FunctionalGroup == "Forb")
-
+```
 #this should start to match the first plot in fig s2, though will need to modify so overlapping dots show up as bigger dots:
+```{r}
 plot(x=cf$Freq, y=tf$Freq)
-
+```
 #my maximums are too high, there is no way figure s2 represents the data they provided.  I realize the caption is vague and recall from the article text that they have another data set they did not provide.
 
-
+##Gagnon, P.R., Passmore, H.A., Slocum, M., Myers, J.A., Harms, K.E., Platt, W.J. and Paine, C.E.T. (2015), Fuels and fires influence vegetation via above‐ and belowground pathways in a high‐diversity plant community. J Ecol, 103: 1009-1019. https://doi.org/10.1111/1365-2745.12421
 
