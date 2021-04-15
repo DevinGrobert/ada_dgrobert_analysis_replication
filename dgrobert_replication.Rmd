@@ -136,12 +136,15 @@ table_s1$increased_fuel_Freq<-NULL
 ```
 
 
-Thats that.  Replicate:
+Thats that.  
+
+##   Replicate
+
 ```{r}
 print(table_s1, width=Inf)
 ```
 
-Original
+##  Original:
 
 <img src="img/table_s1_gagnon2015.JPG" width="600px"/>
 
@@ -233,12 +236,12 @@ p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
 ```
 
-Replicate
+##  Replicate
 ```{r}
 p
 ```
 
-Original
+##  Original
 <img src="img/fig_s1a.JPG" width="400px"/>
 
 Summarise linear model outputs
@@ -299,12 +302,12 @@ Insert NS label
 p <- p + stat_poly_eq(formula = y~x, aes(label = paste0("NS")), label.x="left", label.y="top", na.rm=TRUE)
 ```
 
-Replicate
+##  Replicate
 ```{r}
 p
 ```
 
-Original
+##  Original
 <img src="img/fig_s1b.JPG" width="400px"/>
 
 Summarise linear model outputs
@@ -501,12 +504,13 @@ p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
 ```
 
-Replicate
+##  Replicate
+
 ```{r}
 p
 ```
 
-Original
+##  Original
 <img src="img/fig_s1e.JPG" width="400px"/>
 
 Summarise linear model outputs
@@ -573,12 +577,12 @@ p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..rr.label..)
 p <- p + stat_poly_eq(na.rm=TRUE, formula = y~x, aes(label = paste(..p.value.label..)), p.digits=3, label.x = "left", label.y="bottom")
 ```
 
-Replicate
+##  Replicate
 ```{r}
 p
 ```
 
-Original
+##  Original
 
 Original
 <img src="img/fig_s1f.JPG" width="400px"/>
@@ -588,6 +592,10 @@ Summarize linear model outputs
 lm_log_s1f = lm(log(Max.temp.four_b)~log(Max.temp.surf), data = s1f)
 summary(lm_log_s1f)
 ```
+##  DISCUSSION
+
+
+
 
 ##  ADDENDUM: Scrapped code from visualization:
 
